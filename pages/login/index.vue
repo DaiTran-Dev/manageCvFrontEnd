@@ -30,7 +30,7 @@
             />
           </div>
           <p class="login-card-description">Sign into your account</p>
-          <form action="#!">
+          <form action="">
             <div class="form-group">
               <label for="email" class="sr-only">Email</label>
               <input
