@@ -5,9 +5,9 @@
         <a href="" class="navbar-brand"> Dev<span>Fast</span> </a>
         <b-nav class="flex-column menu">
           <li class="nav-item">
-            <NuxtLink to="/task/" class="nav-link active"
+            <NuxtLink to="/" class="nav-link active"
               ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-              ><span>Task</span></NuxtLink
+              ><span>Home</span></NuxtLink
             >
           </li>
           <li class="nav-item">
@@ -24,9 +24,9 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <NuxtLink to="/task/" class="nav-link"
+                  <NuxtLink to="/cv/create" class="nav-link"
                     ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-                    ><span>Task</span></NuxtLink
+                    ><span>Create CV</span></NuxtLink
                   >
                 </li>
               </ul>

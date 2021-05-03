@@ -19,7 +19,6 @@ export default {
   props: ["size", "value", "options"],
   mounted() {
     this.selected = this.value;
-    console.log(this.value);
   },
 };
 </script>

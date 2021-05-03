@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <h1>Xin Chào Đại Rel</h1>
-  </div>
+<test/>
 </template>
 
 <script>
+import Test from '~/components/cv/CvForm';
 export default {
+  components:{
+    Test
+  }
 }
 </script>
 
