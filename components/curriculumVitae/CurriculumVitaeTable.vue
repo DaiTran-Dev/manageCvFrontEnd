@@ -19,21 +19,29 @@
     </template>
 
     <!-- Custom field  status cv -->
-    <template #cell(status_cv)="status_cv_id">
-      <SelectOption
+    <template #cell(status)="{ value, item }">
+      <b-form-select
         size="sm"
-        :value="status_cv_id.value"
+        :value="value"
         :options="statusCv"
-      ></SelectOption>
+        @change="updateCurriculumVitae('status', $event, item.id)"
+        value-field="id"
+        text-field="name"
+        class="width-max-content"
+      ></b-form-select>
     </template>
 
     <!-- Custom field  email_status -->
-    <template #cell(email_status)="email_status_id">
-      <SelectOption
+    <template #cell(send_mail_status)="{ value, item }">
+      <b-form-select
         size="sm"
-        :value="email_status_id.value"
+        :value="value"
         :options="emailStatus"
-      ></SelectOption>
+        @change="updateCurriculumVitae('send_mail_status', $event, item.id)"
+        value-field="id"
+        text-field="name"
+        class="width-max-content"
+      ></b-form-select>
     </template>
 
     <!-- Custom field  email_status -->
@@ -61,7 +69,7 @@
       <b-button
         variant="outline-danger"
         type="button"
-        @click="$emit('click-delete', row.item.id)"
+        @click="deleteAction(row.item.id)"
         >Delete</b-button
       >
     </template>
@@ -76,19 +84,57 @@ import {
   EMAIL_STATUS,
 } from "~/constant/constant.js";
 import { findNameFromListMasterById } from "~/help/app.js";
-import SelectOption from "~/components/SelectOption.vue";
 
 export default {
-  components: {
-    SelectOption,
-  },
   data() {
     return {
-      review_cv_selected: null,
-      result_pv_selected: null,
+      statusCurriculumVitae: "",
+      sendMailStatusCurriculumVitae: "",
+      deleteStatus: false,
     };
   },
   props: ["itemsTable"],
+  methods: {
+    showMsgBoxDelete() {
+      return this.$bvModal.msgBoxConfirm(
+        "Please confirm that you want to delete everything.",
+        {
+          title: "Please Confirm",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "danger",
+          okTitle: "YES",
+          cancelTitle: "NO",
+          footerClass: "p-2",
+          hideHeaderClose: false,
+          centered: true,
+        }
+      );
+    },
+    async deleteAction(id) {
+      console.log("Delete... ");
+      //Show Confirm message box
+      var resultShowMsgBoxDelete = this.showMsgBoxDelete();
+      resultShowMsgBoxDelete.then((resultQuestion) => {
+        if (resultQuestion) {
+          //Call API Delete
+          console.log("Xóa thành công nhé !!");
+
+          //Send event to parent
+          this.$emit("delete-action", true);
+        }
+      });
+    },
+    async updateCurriculumVitae(field, valueField, curriculumVitaeId) {
+      var curriculumVitae = {};
+      curriculumVitae[field] = valueField;
+      //Call API update
+      console.log("Update in table...");
+      console.log(curriculumVitae);
+      //Send event update to parent
+      this.$emit("update-curriculumVitae", true);
+    },
+  },
   computed: {
     fields() {
       return FIELDS_TABLE_CV;

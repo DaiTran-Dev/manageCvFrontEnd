@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import Test from '~/components/cv/CvForm';
+import Test from '~/components/curriculumVitae/CurriculumVitaeForm';
 export default {
   components:{
     Test

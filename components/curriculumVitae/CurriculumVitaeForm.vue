@@ -8,7 +8,7 @@
               type="text"
               placeholder="Nhập họ và tên ứng viên... "
               required
-              v-model="editCv.name"
+              v-model="editCurriculumVitae.name"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -19,7 +19,7 @@
               type="text"
               placeholder="Nhập số điện thoại ứng viên... "
               required
-              v-model="editCv.phone"
+              v-model="editCurriculumVitae.phone"
             ></b-form-input>
           </b-form-group>
         </b-col>
@@ -30,7 +30,7 @@
           type="email"
           placeholder="Nhập email của ứng viên... "
           required
-          v-model="editCv.email"
+          v-model="editCurriculumVitae.email"
         ></b-form-input>
       </b-form-group>
 
@@ -38,7 +38,7 @@
         <b-form-input
           type="text"
           placeholder="Nhập trường học của ứng viên... "
-          v-model="editCv.schools"
+          v-model="editCurriculumVitae.university"
         ></b-form-input>
       </b-form-group>
 
@@ -46,7 +46,7 @@
         <b-col sm="6">
           <b-form-group label="Vị Trí Ứng Tuyển">
             <b-form-select
-              v-model="editCv.job_id"
+              v-model="editCurriculumVitae.job_id"
               :options="categoryJob"
               value-field="id"
               text-field="name"
@@ -58,7 +58,7 @@
         <b-col sm="6">
           <b-form-group label="Năm Sinh">
             <b-form-select
-              v-model="editCv.year"
+              v-model="editCurriculumVitae.birday_year"
               :options="yearOfBirth"
               value-field="id"
               text-field="name"
@@ -72,7 +72,7 @@
           placeholder="Nhập Link CV..."
           rows="3"
           max-rows="6"
-          v-model="editCv.link_cv"
+          v-model="editCurriculumVitae.link_cv"
           required
         ></b-form-textarea>
       </b-form-group>
@@ -82,20 +82,20 @@
           placeholder="Ghi chú..."
           rows="3"
           max-rows="6"
-          v-model="editCv.note"
+          v-model="editCurriculumVitae.note"
         ></b-form-textarea>
       </b-form-group>
 
       <b-form-group label="Ngày Nhận CV">
         <b-form-datepicker
           class="mb-2"
-          v-model="editCv.received_date"
+          v-model="editCurriculumVitae.received_date"
           placeholder="YYYY-MM-DD"
         ></b-form-datepicker>
       </b-form-group>
 
       <div class="d-flex justify-content-between">
-        <div v-if="!editCv || !editCv.id">
+        <div v-if="!editCurriculumVitae || !editCurriculumVitae.id">
           <b-form-checkbox
             id="checkbox-1"
             name="checkbox-1"
@@ -110,9 +110,14 @@
         <div v-else></div>
         <div class="d-flex justify-content-end">
           <b-button type="submit" variant="primary" class="mx-3">{{
-            editCv && editCv.id ? "Cập Nhật" : "Tạo Mới"
+            editCurriculumVitae && editCurriculumVitae.id
+              ? "Cập Nhật"
+              : "Tạo Mới"
           }}</b-button>
-          <b-button type="reset" variant="danger" v-if="!editCv || !editCv.id"
+          <b-button
+            type="reset"
+            variant="danger"
+            v-if="!editCurriculumVitae || !editCurriculumVitae.id"
             >Reset</b-button
           >
         </div>
@@ -126,15 +131,15 @@ import { YEAR_OF_BIRTH, CATEGORY_JOB } from "~/constant/constant";
 
 export default {
   props: {
-    cv: {
+    curriculumVitae: {
       type: Object,
       require: false,
       default: () => ({
         name: "",
         phone: "",
         email: "",
-        schools: "",
-        year: "",
+        university: "",
+        birday_year: "",
         job_id: "",
         link_cv: "",
         note: "",
@@ -144,19 +149,7 @@ export default {
   },
   data() {
     return {
-      editCv: this.cv
-        ? { ...this.cv }
-        : {
-            name: "",
-            phone: "",
-            email: "",
-            schools: "",
-            year: "",
-            job_id: "",
-            link_cv: "",
-            note: "",
-            received_date: "",
-          },
+      editCurriculumVitae: {},
       newCreationState: false,
     };
   },
@@ -171,28 +164,32 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault();
-      this.$emit("onSubmit", this.editCv);
+      this.$emit("onSubmit", this.editCurriculumVitae);
     },
     onReset(event) {
       event.preventDefault();
-      this.editCv = this.cv;
-    },
-    dateNow() {
-      var dateNow = new Date();
-      return (
-        dateNow.getFullYear() +
-        "-" +
-        (dateNow.getMonth() +
-        1) +
-        "-" +
-        dateNow.getDate()
-      );
+      this.editCurriculumVitae = this.curriculumVitae;
     },
   },
-  created() {
-    if (!this.editCv.received_date) {
-      this.editCv.received_date = this.dateNow();
-    }
+  watch: {
+    curriculumVitae: {
+      immediate: true,
+      handler() {
+        this.editCurriculumVitae = this.curriculumVitae
+          ? { ...this.curriculumVitae }
+          : {
+              name: "",
+              phone: "",
+              email: "",
+              university: "",
+              birday_year: "",
+              job_id: "",
+              link_cv: "",
+              note: "",
+              received_date: "",
+            };
+      },
+    },
   },
 };
 </script>

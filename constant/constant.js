@@ -4,14 +4,14 @@ export const FIELDS_TABLE_CV = [
   { key: "name", label: 'Tên', sortable: false },
   { key: "phone", label: 'Số Điện Thoại', sortable: false },
   { key: "email", label: 'Email', sortable: false },
-  { key: "year", label: 'Năm Sinh', sortable: false },
+  { key: "birday_year", label: 'Năm Sinh', sortable: false },
   { key: "job_id", label: 'Vị Trí', sortable: false },
   { key: "link_cv", label: 'Link CV', sortable: false },
   { key: "received_date", label: 'Ngày Nhận CV', sortable: false },
   { key: "interview_date", label: 'Ngày PV', sortable: false },
-  { key: "status_cv", label: 'Trạng Thái', sortable: false },
+  { key: "status", label: 'Trạng Thái', sortable: false },
   { key: "date_to_work", label: 'Ngày Làm Việc', sortable: false },
-  { key: "email_status", label: 'Phản Hồi Email', sortable: false },
+  { key: "send_mail_status", label: 'Phản Hồi Email', sortable: false },
   { key: "edit", label: 'Sửa', sortable: false },
   { key: "delete", label: 'Xóa', sortable: false },
 ];
@@ -32,7 +32,7 @@ export const STATUS_CV = [
   { id: 4, name: "Đỗ PV" }
 ];
 
-//data demo email status
+//data demo //data demo send_mail_statu
 export const EMAIL_STATUS = [
   { id: 0, name: "Chưa Gửi" },
   { id: 1, name: "Gửi Cho Người Trượt CV" },

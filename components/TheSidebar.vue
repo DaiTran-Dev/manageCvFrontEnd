@@ -18,15 +18,21 @@
             <b-collapse id="collapse-2">
               <ul>
                 <li class="nav-item">
-                  <NuxtLink to="/cv/" class="nav-link"
+                  <NuxtLink to="/curriculumVitae/" class="nav-link"
                     ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-                    ><span>Index</span></NuxtLink
+                    ><span>All Cv</span></NuxtLink
                   >
                 </li>
                 <li class="nav-item">
-                  <NuxtLink to="/cv/create" class="nav-link"
+                  <NuxtLink to="/curriculumVitae/unreviewed" class="nav-link"
                     ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-                    ><span>Create CV</span></NuxtLink
+                    ><span>Unreviewed</span></NuxtLink
+                  >
+                </li>
+                <li class="nav-item">
+                  <NuxtLink to="/curriculumVitae/interviewed" class="nav-link"
+                    ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
+                    ><span>Interviewed</span></NuxtLink
                   >
                 </li>
               </ul>

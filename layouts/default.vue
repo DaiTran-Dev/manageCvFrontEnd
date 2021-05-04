@@ -45,4 +45,7 @@ html {
   position: relative;
   margin-left: 250px;
 }
+.show-content{
+  padding-top: 3em;
+}
 </style>
