@@ -78,25 +78,12 @@ export default {
   props: {
     curriculumVitae: {
       type: Object,
-      require: false,
-      default: () => ({
-        note: '',
-        interview_date: '',
-        interview_time: '',
-        interview_date_time: '',
-        status: '',
-      }),
+      require: true,
     },
   },
   data() {
     return {
-      editCurriculumVitae: {
-        note: '',
-        interview_date: '',
-        interview_time: '',
-        interview_date_time: '',
-        status: '',
-      },
+      editCurriculumVitae: {},
       newCreationState: false,
     }
   },
@@ -112,6 +99,7 @@ export default {
         this.editCurriculumVitae.interview_date +
         ' ' +
         this.editCurriculumVitae.interview_time
+      console.log('--------')
       console.log(this.editCurriculumVitae)
       console.log('--------')
       this.$emit('onSubmit', this.editCurriculumVitae)
@@ -125,20 +113,7 @@ export default {
     curriculumVitae: {
       immediate: true,
       handler() {
-        this.editCurriculumVitae = this.curriculumVitae
-          ? {
-              id: this.curriculumVitae.id,
-              note: this.curriculumVitae.note,
-              status: this.curriculumVitae.status,
-              interview_date: this.curriculumVitae.interview_date,
-            }
-          : {
-              note: '',
-              interview_date: '',
-              interview_time: '',
-              interview_date_time: '',
-              status: '',
-            }
+        this.editCurriculumVitae =this.curriculumVitae
       },
     },
   },

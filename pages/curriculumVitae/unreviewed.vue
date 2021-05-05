@@ -5,6 +5,7 @@
         <curriculum-vitae-search @search-action="searchAction($event)" />
       </b-col>
     </b-row>
+    
     <!-- List Cv  -->
     <curriculum-vitae-table
       v-if="itemTable.length > 0"
@@ -25,14 +26,12 @@
 
 <script>
 import CurriculumVitaeTable from '~/components/curriculumVitae/CurriculumVitaeTable'
-import Modal from '~/components/Modal'
 import CurriculumVitaeCreateEdit from '~/components/curriculumVitae/CurriculumVitaeCreateEdit'
 import CurriculumVitaeSearch from '~/components/curriculumVitae/CurriculumVitaeSearch'
 
 export default {
   components: {
     CurriculumVitaeTable,
-    Modal,
     CurriculumVitaeCreateEdit,
     CurriculumVitaeSearch,
   },

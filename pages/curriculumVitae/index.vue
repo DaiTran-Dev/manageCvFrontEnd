@@ -1,5 +1,6 @@
 <template>
   <div class="mr-sm-1 mr-md-2">
+    <!-- Btn Open Modal and Btn create CV -->
     <b-row class="mb-2" v-show="activeFormSearch">
       <b-col sm="10">
         <curriculum-vitae-search @search-action="searchAction($event)" />
@@ -12,11 +13,14 @@
         </div>
       </b-col>
     </b-row>
+
+    <!-- Filter  -->
     <b-row class="mb-5">
       <b-col sm="12">
         <curriculum-vitae-filter @search-action="searchAction($event)" />
       </b-col>
     </b-row>
+
     <!-- List Cv  -->
     <curriculum-vitae-table
       v-if="itemTable.length > 0"
@@ -39,7 +43,6 @@
 
 <script>
 import CurriculumVitaeTable from '~/components/curriculumVitae/CurriculumVitaeTable'
-import Modal from '~/components/Modal'
 import CurriculumVitaeCreateEdit from '~/components/curriculumVitae/CurriculumVitaeCreateEdit'
 import CurriculumVitaeSearch from '~/components/curriculumVitae/CurriculumVitaeSearch'
 import CurriculumVitaeFilter from '~/components/curriculumVitae/CurriculumVitaeFilter'
@@ -47,7 +50,6 @@ import CurriculumVitaeFilter from '~/components/curriculumVitae/CurriculumVitaeF
 export default {
   components: {
     CurriculumVitaeTable,
-    Modal,
     CurriculumVitaeCreateEdit,
     CurriculumVitaeSearch,
     CurriculumVitaeFilter,

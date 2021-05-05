@@ -27,14 +27,12 @@
 
 <script>
 import CurriculumVitaeTable from '~/components/curriculumVitae/CurriculumVitaeTable'
-import Modal from '~/components/Modal'
 import CurriculumVitaeCreateEdit from '~/components/curriculumVitae/CurriculumVitaeCreateEdit'
 import CurriculumVitaeSearch from '~/components/curriculumVitae/CurriculumVitaeSearch'
 
 export default {
   components: {
     CurriculumVitaeTable,
-    Modal,
     CurriculumVitaeCreateEdit,
     CurriculumVitaeSearch,
   },
@@ -54,7 +52,7 @@ export default {
       }
     },
     editAction(curriculumVitaeId) {
-      console.log("Asdad");
+      console.log('Asdad')
       console.log(curriculumVitaeId)
       this.curriculumVitaeId = curriculumVitaeId
       this.$bvModal.show('createEidtCvModal')

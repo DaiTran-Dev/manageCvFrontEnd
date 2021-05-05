@@ -1,6 +1,11 @@
 <template>
   <div>
-    <curriculum-vitae-form
+    <!-- <curriculum-vitae-form
+      :curriculumVitae="curriculumVitae"
+      @on-change-status-form="newCreationState = $event"
+      @onSubmit="onSubmit($event)"
+    /> -->
+    <curriculum-vitae-form-interview
       :curriculumVitae="curriculumVitae"
       @on-change-status-form="newCreationState = $event"
       @onSubmit="onSubmit($event)"
@@ -10,9 +15,11 @@
 
 <script>
 import CurriculumVitaeForm from './CurriculumVitaeForm'
+import CurriculumVitaeFormInterview from './CurriculumVitaeFormInterview'
 export default {
   components: {
     CurriculumVitaeForm,
+    CurriculumVitaeFormInterview,
   },
   props: {
     curriculumVitaeId: {
@@ -43,18 +50,41 @@ export default {
       console.log(curriculumVitae)
       return await this.$axios.$post('curriculumVitaes', curriculumVitae)
     },
-    async updateAction(curriculumVitaeId,curriculumVitae) {
-      return await this.$axios.$put(`curriculumVitaes/${curriculumVitaeId}`,curriculumVitae)
+    async updateAction(curriculumVitaeId, curriculumVitae) {
+      return await this.$axios.$put(
+        `curriculumVitaes/${curriculumVitaeId}`,
+        curriculumVitae
+      )
+    },
+    async updateByFied(curriculumVitaeId, curriculumVitae) {
+      return await this.$axios.$put(
+        `curriculumVitaes/updateByFied/${curriculumVitaeId}`,
+        curriculumVitae
+      )
     },
     async findCurriculumVitaeById(curriculumVitaeId) {
-      return await this.$axios.$get(`curriculumVitaes/getById/${curriculumVitaeId}`)
+      return await this.$axios.$get(
+        `curriculumVitaes/getById/${curriculumVitaeId}`
+      )
     },
     onSubmit(curriculumVitae) {
       if (!curriculumVitae || !(curriculumVitae instanceof Object)) {
         return
       }
       if (curriculumVitae.id) {
-        this.updateAction(curriculumVitae.id,curriculumVitae)
+        if (curriculumVitae.category_update) {
+          this.updateByFied(curriculumVitae.id, curriculumVitae)
+            .then((res) => {
+              this.$bvModal.hide('createEidtCvModal')
+              this.$emit('on-send-feedback-form', true)
+            })
+            .catch((err) => {
+              console.log(err)
+              this.$emit('on-send-feedback-form', false)
+            })
+          return
+        }
+        this.updateAction(curriculumVitae.id, curriculumVitae)
           .then((res) => {
             this.$bvModal.hide('createEidtCvModal')
             this.$emit('on-send-feedback-form', true)
