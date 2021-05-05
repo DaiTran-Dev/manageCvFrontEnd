@@ -4,10 +4,10 @@
       <b-form-input
         type="text"
         placeholder="Nhập email cần search..."
-        v-model="filteredFields.content_search"
+        v-model="filteredFields.email"
       ></b-form-input>
       <b-input-group-append>
-        <b-button  @click="searchAction()"
+        <b-button @click="searchAction()"
           ><b-icon icon="search"></b-icon
         ></b-button>
       </b-input-group-append>
@@ -16,20 +16,22 @@
 </template>
 
 <script>
+import { convertOptionQueries } from '~/help/app.js'
+
 export default {
   data() {
     return {
-      filteredFields:{
-        content_search: "",
+      filteredFields: {
+        email: '',
       },
-    };
+    }
   },
   methods: {
     searchAction() {
-      this.$emit("search-action", this.filteredFields);
+      this.$emit('search-action', convertOptionQueries(this.filteredFields))
     },
   },
-};
+}
 </script>
 
 <style>

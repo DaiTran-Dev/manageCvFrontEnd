@@ -51,9 +51,9 @@
             >
           </li>
           <li class="nav-item">
-            <NuxtLink to="/task/" class="nav-link"
+            <NuxtLink to="/login/" class="nav-link"
               ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-              ><span>Task</span></NuxtLink
+              ><span>Login</span></NuxtLink
             >
           </li>
         </b-nav>

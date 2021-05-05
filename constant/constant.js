@@ -25,7 +25,7 @@ export const CATEGORY_JOB = [
 
 //data demo status_cv
 export const STATUS_CV = [
-  { id: "", name: "Chưa Có Trạng Thái" },
+  { id: "", name: "Chờ Xem Xét CV" },
   { id: 1, name: "Trượt CV" },
   { id: 2, name: "Đỗ CV" },
   { id: 3, name: "Trượt PV" },

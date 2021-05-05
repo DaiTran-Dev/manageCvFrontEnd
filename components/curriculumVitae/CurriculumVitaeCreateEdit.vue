@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import CurriculumVitaeForm from "./CurriculumVitaeForm";
+import CurriculumVitaeForm from './CurriculumVitaeForm'
 export default {
   components: {
     CurriculumVitaeForm,
@@ -26,146 +26,112 @@ export default {
       newCreationState: false,
       curriculumVitae: {
         id: null,
-        name: "",
-        phone: "",
-        email: "",
-        university: "",
-        birday_year: "",
-        job_id: "",
-        link_cv: "",
-        note: "",
-        received_date: "",
+        name: '',
+        phone: '',
+        email: '',
+        university: '',
+        birday_year: '',
+        job_id: '',
+        link_cv: '',
+        note: '',
+        received_date: '',
       },
-    };
+    }
   },
   methods: {
-    deleteAction(id) {
-      var indexDelete = null;
-      indexDelete = this.itemTable.findIndex((row) => {
-        return row.id == id;
-      });
-      if (indexDelete != null && indexDelete >= 0) {
-        this.itemTable.splice(indexDelete, 1);
-      }
+    async createAction(curriculumVitae) {
+      console.log(curriculumVitae)
+      return await this.$axios.$post('curriculumVitaes', curriculumVitae)
     },
-    editAction(id) {
-      this.cv = {
-        name: "Rel Rel",
-        email: "rel.dev890@gmail.com",
-        phone: "01234567999",
-        university: "THPT Nghĩa Dân",
-        birday_year: "2001",
-        job_id: 2,
-        link_cv:
-          "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-        note: "Note ne",
-        received_date: "2021-08-07",
-        interview_date: "2021-08-09 13:42:6",
-        status: 1,
-        date_to_work: "2021-04-15",
-        send_mail_status: 0,
-      };
-      this.cv.id = id;
-      this.$bvModal.show("createEidtCvModal");
+    async updateAction(curriculumVitaeId,curriculumVitae) {
+      return await this.$axios.$put(`curriculumVitaes/${curriculumVitaeId}`,curriculumVitae)
+    },
+    async findCurriculumVitaeById(curriculumVitaeId) {
+      return await this.$axios.$get(`curriculumVitaes/getById/${curriculumVitaeId}`)
     },
     onSubmit(curriculumVitae) {
       if (!curriculumVitae || !(curriculumVitae instanceof Object)) {
-        return;
+        return
       }
       if (curriculumVitae.id) {
-        console.log("Edit completed...");
-        this.$bvModal.hide("createEidtCvModal");
-        this.$emit("on-send-feedback-form", true);
+        this.updateAction(curriculumVitae.id,curriculumVitae)
+          .then((res) => {
+            this.$bvModal.hide('createEidtCvModal')
+            this.$emit('on-send-feedback-form', true)
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$emit('on-send-feedback-form', false)
+          })
       } else {
-        console.log("Create completed...");
-        if (!newCreationState) {
-          this.$bvModal.hide("createEidtCvModal");
-        }
+        this.createAction(curriculumVitae)
+          .then((res) => {
+            this.$emit('on-send-feedback-form', true)
+            if (!this.newCreationState) {
+              this.$bvModal.hide('createEidtCvModal')
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+            this.$emit('on-send-feedback-form', false)
+          })
       }
-    },
-    dateNow() {
-      var dateNow = new Date();
-      return (
-        dateNow.getFullYear() +
-        "-" +
-        (dateNow.getMonth() + 1) +
-        "-" +
-        dateNow.getDate()
-      );
     },
     setCurriculumVitaeByDefault() {
       // Set value default
       this.curriculumVitae = {
         id: null,
-        name: "",
-        phone: "",
-        email: "",
-        university: "",
-        birday_year: "",
-        job_id: "",
-        link_cv: "",
-        note: "",
-        received_date: "",
-      };
+        name: '',
+        phone: '',
+        email: '',
+        university: '',
+        birday_year: '',
+        job_id: '',
+        link_cv: '',
+        note: '',
+        received_date: '',
+      }
     },
     setCurriculumVitaeByValue(curriculumVitae) {
       // Validate data source
       if (!curriculumVitae || !(curriculumVitae instanceof Object)) {
-        return;
+        return
       }
 
       // Set value
-      this.curriculumVitae = curriculumVitae;
+      this.curriculumVitae = curriculumVitae
 
       // Set date default
       if (!this.curriculumVitae.received_date) {
-        this.curriculumVitae.received_date = this.dateNow();
+        this.curriculumVitae.received_date = this.dateNow()
       }
-    },
-    async getCurriculumVitae(curriculumVitaeId) {
-      var response = {
-        id: 1,
-        name: "Rel Rel",
-        email: "rel.dev890@gmail.com",
-        phone: "01234567999",
-        university: "THPT Nghĩa Dân",
-        birday_year: "2001",
-        job_id: 2,
-        link_cv:
-          "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-        note: "Note ne",
-        received_date: "2021-08-07",
-        interview_date: "2021-08-09 13:42:6",
-        status: 1,
-        date_to_work: "2021-04-15",
-        send_mail_status: 0,
-      };
-      return response;
     },
   },
   beforeMount() {
-    console.log("Id Cv props la : . " + this.curriculumVitaeId);
+    console.log('Id Cv props la : . ' + this.curriculumVitaeId)
   },
   watch: {
     curriculumVitaeId: {
       immediate: true,
       handler(newCurriculumVitaeId, oldCurriculumVitaeId) {
         if (newCurriculumVitaeId) {
-          var response = this.getCurriculumVitae(newCurriculumVitaeId);
-          response
+          var curriculumVitae = this.findCurriculumVitaeById(
+            newCurriculumVitaeId
+          )
+          curriculumVitae
             .then((res) => {
-              this.setCurriculumVitaeByValue(res);
+              this.setCurriculumVitaeByValue(res)
             })
             .catch((err) => {
-              console.log("Erro Call Api ." + err);
-            });
+              console.log('Erro Call Api .' + err)
+            })
         } else {
-          this.setCurriculumVitaeByDefault();
+          this.setCurriculumVitaeByDefault()
         }
       },
     },
   },
-};
+}
 </script>
 
 <style>

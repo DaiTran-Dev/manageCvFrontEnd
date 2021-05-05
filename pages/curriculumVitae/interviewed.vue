@@ -9,6 +9,8 @@
     <curriculum-vitae-table
       v-if="itemTable.length > 0"
       :itemsTable="itemTable"
+      @click-edit="editAction($event)"
+      @delete-action="deleteAction($event)"
       @update-curriculumVitae="updateTableAction($event)"
     />
     <div v-else class="text-center"><h2>Hiện Tại Chưa có dữ liệu...</h2></div>
@@ -24,11 +26,10 @@
 </template>
 
 <script>
-import CurriculumVitaeTable from "~/components/curriculumVitae/CurriculumVitaeTable";
-import Modal from "~/components/Modal";
-import CurriculumVitaeCreateEdit from "~/components/curriculumVitae/CurriculumVitaeCreateEdit";
-import CurriculumVitaeSearch from "~/components/curriculumVitae/CurriculumVitaeSearch";
-import CurriculumVitaeFilter from "~/components/curriculumVitae/CurriculumVitaeFilter";
+import CurriculumVitaeTable from '~/components/curriculumVitae/CurriculumVitaeTable'
+import Modal from '~/components/Modal'
+import CurriculumVitaeCreateEdit from '~/components/curriculumVitae/CurriculumVitaeCreateEdit'
+import CurriculumVitaeSearch from '~/components/curriculumVitae/CurriculumVitaeSearch'
 
 export default {
   components: {
@@ -36,160 +37,96 @@ export default {
     Modal,
     CurriculumVitaeCreateEdit,
     CurriculumVitaeSearch,
-    CurriculumVitaeFilter,
   },
   data() {
     return {
       itemTable: [],
       curriculumVitaeId: null,
-    };
+    }
   },
   methods: {
+    deleteAction(deleteStatus) {
+      if (deleteStatus) {
+        //Call Method loadDataTableCurriculumVitae
+        this.loadDataTableCurriculumVitae()
+      } else {
+        console.log('Delete erro')
+      }
+    },
+    editAction(curriculumVitaeId) {
+      console.log("Asdad");
+      console.log(curriculumVitaeId)
+      this.curriculumVitaeId = curriculumVitaeId
+      this.$bvModal.show('createEidtCvModal')
+    },
     updateTableAction(updateStatus) {
       if (!updateStatus) {
-        return;
+        return
       }
-      console.log("Ok da reload");
+      console.log('Ok da reload')
       //Call Method loadDataTableCurriculumVitae
-      this.loadDataTableCurriculumVitae();
+      this.loadDataTableCurriculumVitae()
     },
     handlingFeedbackForm(stausFeedback) {
       if (!stausFeedback) {
-        return;
+        return
       }
-      this.curriculumVitaeId = null;
+      this.curriculumVitaeId = null
     },
-    async getAllCurriculumVitaeByInterviewed() {
-      //Call API get all CurriculumVitae
-      return [
-        {
-          id: 1,
-          name: "Rel Rel",
-          email: "rel.dev890@gmail.com",
-          phone: "01234567999",
-          university: "THPT Nghĩa Dân",
-          birday_year: "2001",
-          job_id: 2,
-          link_cv:
-            "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-          note: "Note ne",
-          received_date: "2021-08-07",
-          interview_date: "2021-08-09 13:42:6",
-          status: 1,
-          date_to_work: "2021-04-15",
-          send_mail_status: 0,
-        },
-        {
-          id: 2,
-          name: "Rel Rel",
-          email: "rel.dev890@gmail.com",
-          phone: "01234567999",
-          university: "THPT Nghĩa Dân",
-          birday_year: "2001",
-          job_id: 2,
-          link_cv:
-            "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-          note: "Note ne",
-          received_date: "2021-08-07",
-          interview_date: "2021-08-09 13:42:6",
-          status: 2,
-          date_to_work: "2021-04-15",
-          send_mail_status: 1,
-        },
-        {
-          id: 3,
-          name: "Rel Rel",
-          email: "rel.dev890@gmail.com",
-          phone: "01234567999",
-          university: "THPT Nghĩa Dân",
-          birday_year: "2001",
-          job_id: 2,
-          link_cv:
-            "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-          note: "Note ne",
-          received_date: "2021-08-07",
-          interview_date: "2021-08-09 13:42:6",
-          status: 3,
-          date_to_work: "2021-04-15",
-          send_mail_status: 2,
-        },
-        {
-          id: 4,
-          name: "Rel Rel",
-          email: "rel.dev890@gmail.com",
-          phone: "01234567999",
-          university: "THPT Nghĩa Dân",
-          birday_year: "2001",
-          job_id: 2,
-          link_cv:
-            "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-          note: "Note ne",
-          received_date: "2021-08-07",
-          interview_date: "2021-08-09 13:42:6",
-          status: 4,
-          date_to_work: "2021-04-15",
-          send_mail_status: 3,
-        },
-      ];
-    },
-
     setItemTable(curriculumVitaes) {
       if (!Array.isArray(curriculumVitaes)) {
-        console.log("Ko La Mang");
-        return;
+        return
       }
-      this.itemTable = curriculumVitaes;
+      this.itemTable = curriculumVitaes
     },
     loadDataTableCurriculumVitae() {
-      var curriculumVitaes = this.getAllCurriculumVitaeByInterviewed();
+      var filteredFields = {
+        status: {
+          condition: '=',
+          value: 2,
+        },
+      }
+      var curriculumVitaes = this.getCurriculumVitaeByFilteredFields(
+        filteredFields
+      )
       curriculumVitaes
         .then((res) => {
           //Set value to ItemTable
-          this.setItemTable(res);
+          this.setItemTable(res)
         })
         .catch((err) => {
-          console.log("Erro loadDataTable CurriculumVitae " + err);
-        });
+          console.log('Erro loadDataTable CurriculumVitae ' + err)
+        })
     },
     async getCurriculumVitaeByFilteredFields(filteredFields) {
+      console.log('Thong TIn query')
       //Call API
-      return [
-        {
-          id: 2,
-          name: "Rel Rel",
-          email: "rel.dev890@gmail.com",
-          phone: "01234567999",
-          university: "THPT Nghĩa Dân",
-          birday_year: "2001",
-          job_id: 2,
-          link_cv:
-            "https://p4.wallpaperbetter.com/wallpaper/951/583/798/fantasy-art-warrior-dark-souls-iii-dark-souls-wallpaper-preview.jpg",
-          note: "Note ne",
-          received_date: "2021-08-07",
-          interview_date: "2021-08-09 13:42:6",
-          status: 2,
-          date_to_work: "2021-04-15",
-          send_mail_status: 1,
-        },
-      ];
+      return await this.$axios.$get('curriculumVitaes/filterByListFied', {
+        params: filteredFields,
+      })
     },
     searchAction(filteredFields) {
+      filteredFields.status = {
+        condition: '=',
+        value: 2,
+      }
+      console.log(filteredFields)
       var curriculumVitaes = this.getCurriculumVitaeByFilteredFields(
         filteredFields
-      );
+      )
       curriculumVitaes
         .then((res) => {
-          this.itemTable = res;
+          this.itemTable = res
         })
         .catch((err) => {
-          console.log("Erro filteredFields " + err);
-        });
+          console.log('Erro search ' + err)
+        })
     },
   },
   created() {
-    //Load all data Curriculum Vitae interviewed to Table
-    this.loadDataTableCurriculumVitae();
+    //Load all data Curriculum Vitae Unreviewed to Table
+    this.loadDataTableCurriculumVitae()
   },
-};
+}
 </script>
 

@@ -11,7 +11,7 @@
               <b-form-input
                 type="text"
                 placeholder="Nhập email cần search..."
-                v-model="filteredFields.content_search"
+                v-model="filteredFields.email"
               ></b-form-input> </b-form-group></b-col
         ></b-row>
         <b-row>
@@ -59,7 +59,7 @@
 
 <script>
 import { CATEGORY_JOB, STATUS_CV, EMAIL_STATUS } from '~/constant/constant.js'
-import { findNameFromListMasterById } from '~/help/app.js'
+import { findNameFromListMasterById, convertOptionQueries } from '~/help/app.js'
 
 export default {
   data() {
@@ -67,13 +67,13 @@ export default {
       filteredFields: {
         send_mail_status: '',
         status: '',
-        content_search: '',
+        email: '',
       },
     }
   },
   methods: {
     searchAction() {
-      this.$emit('search-action', this.filteredFields)
+      this.$emit('search-action', convertOptionQueries(this.filteredFields))
     },
   },
   computed: {

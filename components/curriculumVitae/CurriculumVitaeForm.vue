@@ -102,7 +102,7 @@
             v-model="newCreationState"
             v-bind:true-value="true"
             v-bind:false-value="false"
-            @change="$emit('on-change-status-form', newCreationState)"
+            @click="$emit('on-change-status-form', newCreationState)"
           >
             Tiếp Tục Tạo Mới
           </b-form-checkbox>
@@ -153,6 +153,9 @@ export default {
       newCreationState: false,
     }
   },
+  created() {
+    this.editCurriculumVitae.received_date = this.dateNow()
+  },
   computed: {
     yearOfBirth() {
       return YEAR_OF_BIRTH
@@ -164,11 +167,23 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
+      console.log(this.editCurriculumVitae)
+      console.log('--------')
       this.$emit('onSubmit', this.editCurriculumVitae)
     },
     onReset(event) {
       event.preventDefault()
       this.editCurriculumVitae = this.curriculumVitae
+    },
+    dateNow() {
+      var dateNow = new Date()
+      return (
+        dateNow.getFullYear() +
+        '-' +
+        (dateNow.getMonth() + 1) +
+        '-' +
+        dateNow.getDate()
+      )
     },
   },
   watch: {
@@ -176,7 +191,18 @@ export default {
       immediate: true,
       handler() {
         this.editCurriculumVitae = this.curriculumVitae
-          ? { ...this.curriculumVitae }
+          ? {
+              id: this.curriculumVitae.id,
+              name: this.curriculumVitae.name,
+              phone: this.curriculumVitae.phone,
+              email: this.curriculumVitae.email,
+              university: this.curriculumVitae.university,
+              birday_year: this.curriculumVitae.birday_year,
+              job_id: this.curriculumVitae.job_id,
+              link_cv: this.curriculumVitae.link_cv,
+              note: this.curriculumVitae.note,
+              received_date: this.curriculumVitae.received_date,
+            }
           : {
               name: '',
               phone: '',
@@ -186,7 +212,7 @@ export default {
               job_id: '',
               link_cv: '',
               note: '',
-              received_date: '',
+              received_date: this.dateNow(),
             }
       },
     },

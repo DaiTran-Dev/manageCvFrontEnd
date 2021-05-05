@@ -18,3 +18,28 @@ export function findNameFromListMasterById(id, listMaster = []) {
     }
     return "";
 }
+
+
+/**
+ * Convert option query .
+ *
+ * @param {Object} optionQueries
+ * @return {string} name.
+ */
+export function convertOptionQueries(optionQueries = {}) {
+    var filteredFields = {}
+    for (const [fied, fiedValue] of Object.entries(optionQueries)) {
+        if (Number.isInteger(fiedValue)) {
+            filteredFields[fied] = {
+                condition: '=',
+                value: fiedValue,
+            }
+        } else if (fiedValue) {
+            filteredFields[fied] = {
+                condition: 'like',
+                value: `%${fiedValue}%`,
+            }
+        }
+    }
+    return filteredFields
+}

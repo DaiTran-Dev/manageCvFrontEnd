@@ -7,18 +7,6 @@
           alt="login"
           class="login-card-img"
         />
-        <p
-          class="text-white font-weight-medium text-center flex-grow align-self-end footer-link text-small"
-        >
-          Free
-          <a
-            href="https://www.bootstrapdash.com/"
-            target="_blank"
-            class="text-white"
-            >Bootstrap dashboard templates</a
-          >
-          from Bootstrapdash
-        </p>
       </div>
       <div class="col-md-7">
         <div class="card-body">
