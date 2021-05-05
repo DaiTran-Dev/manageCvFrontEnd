@@ -58,43 +58,43 @@
 </template>
 
 <script>
-import { CATEGORY_JOB, STATUS_CV, EMAIL_STATUS } from "~/constant/constant.js";
-import { findNameFromListMasterById } from "~/help/app.js";
+import { CATEGORY_JOB, STATUS_CV, EMAIL_STATUS } from '~/constant/constant.js'
+import { findNameFromListMasterById } from '~/help/app.js'
 
 export default {
   data() {
     return {
       filteredFields: {
-        send_mail_status: "",
-        status: "",
-        content_search: "",
+        send_mail_status: '',
+        status: '',
+        content_search: '',
       },
-    };
+    }
   },
   methods: {
     searchAction() {
-      this.$emit("search-action", this.filteredFields);
+      this.$emit('search-action', this.filteredFields)
     },
   },
   computed: {
     jobCategory() {
-      return CATEGORY_JOB;
+      return CATEGORY_JOB
     },
     findNameFromListMasterById() {
-      return findNameFromListMasterById;
+      return findNameFromListMasterById
     },
     statusCv() {
       return STATUS_CV.filter(function (row) {
-        return Number.isInteger(row.id);
-      });
+        return Number.isInteger(row.id)
+      })
     },
     emailStatus() {
       return EMAIL_STATUS.filter(function (row) {
-        return Number.isInteger(row.id);
-      });
+        return Number.isInteger(row.id)
+      })
     },
   },
-};
+}
 </script>
 
 <style>

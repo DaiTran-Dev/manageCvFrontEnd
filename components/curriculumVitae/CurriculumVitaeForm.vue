@@ -111,8 +111,8 @@
         <div class="d-flex justify-content-end">
           <b-button type="submit" variant="primary" class="mx-3">{{
             editCurriculumVitae && editCurriculumVitae.id
-              ? "Cập Nhật"
-              : "Tạo Mới"
+              ? 'Cập Nhật'
+              : 'Tạo Mới'
           }}</b-button>
           <b-button
             type="reset"
@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { YEAR_OF_BIRTH, CATEGORY_JOB } from "~/constant/constant";
+import { YEAR_OF_BIRTH, CATEGORY_JOB } from '~/constant/constant'
 
 export default {
   props: {
@@ -135,15 +135,15 @@ export default {
       type: Object,
       require: false,
       default: () => ({
-        name: "",
-        phone: "",
-        email: "",
-        university: "",
-        birday_year: "",
-        job_id: "",
-        link_cv: "",
-        note: "",
-        received_date: "",
+        name: '',
+        phone: '',
+        email: '',
+        university: '',
+        birday_year: '',
+        job_id: '',
+        link_cv: '',
+        note: '',
+        received_date: '',
       }),
     },
   },
@@ -151,24 +151,24 @@ export default {
     return {
       editCurriculumVitae: {},
       newCreationState: false,
-    };
+    }
   },
   computed: {
     yearOfBirth() {
-      return YEAR_OF_BIRTH;
+      return YEAR_OF_BIRTH
     },
     categoryJob() {
-      return CATEGORY_JOB;
+      return CATEGORY_JOB
     },
   },
   methods: {
     onSubmit(event) {
-      event.preventDefault();
-      this.$emit("onSubmit", this.editCurriculumVitae);
+      event.preventDefault()
+      this.$emit('onSubmit', this.editCurriculumVitae)
     },
     onReset(event) {
-      event.preventDefault();
-      this.editCurriculumVitae = this.curriculumVitae;
+      event.preventDefault()
+      this.editCurriculumVitae = this.curriculumVitae
     },
   },
   watch: {
@@ -178,20 +178,20 @@ export default {
         this.editCurriculumVitae = this.curriculumVitae
           ? { ...this.curriculumVitae }
           : {
-              name: "",
-              phone: "",
-              email: "",
-              university: "",
-              birday_year: "",
-              job_id: "",
-              link_cv: "",
-              note: "",
-              received_date: "",
-            };
+              name: '',
+              phone: '',
+              email: '',
+              university: '',
+              birday_year: '',
+              job_id: '',
+              link_cv: '',
+              note: '',
+              received_date: '',
+            }
       },
     },
   },
-};
+}
 </script>
 
 <style>
