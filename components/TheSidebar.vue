@@ -17,43 +17,27 @@
             </div>
             <b-collapse id="collapse-2">
               <ul>
-                <li class="nav-item">
-                  <NuxtLink to="/curriculumVitae/" class="nav-link"
-                    ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-                    ><span>All Cv</span></NuxtLink
-                  >
-                </li>
-                <li class="nav-item">
-                  <NuxtLink to="/curriculumVitae/unreviewed" class="nav-link"
-                    ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-                    ><span>Unreviewed</span></NuxtLink
-                  >
-                </li>
-                <li class="nav-item">
-                  <NuxtLink to="/curriculumVitae/interviewed" class="nav-link"
-                    ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-                    ><span>Interviewed</span></NuxtLink
+                <li
+                  class="nav-item"
+                  v-for="route in routesManagerCurriculumVitae"
+                  :key="route.url"
+                >
+                  <NuxtLink :to="route.url" :class="route.class"
+                    ><b-icon
+                      :icon="route.icon"
+                      font-scale="1"
+                      class="icon-menu"
+                    ></b-icon
+                    ><span>{{ route.title }}</span></NuxtLink
                   >
                 </li>
               </ul>
             </b-collapse>
           </li>
           <li class="nav-item">
-            <NuxtLink to="/task/" class="nav-link"
+            <span @click.prevent="logout" class="nav-link"
               ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-              ><span>Task</span></NuxtLink
-            >
-          </li>
-          <li class="nav-item">
-            <NuxtLink to="/task/" class="nav-link"
-              ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-              ><span>Task</span></NuxtLink
-            >
-          </li>
-          <li class="nav-item">
-            <NuxtLink to="/login/" class="nav-link"
-              ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
-              ><span>Login</span></NuxtLink
+              ><span>Logout</span></span
             >
           </li>
         </b-nav>
@@ -64,7 +48,23 @@
 
 
 <script>
-export default {};
+import { Routes_Manager_Curriculum_Vitae } from '~/constant/constant'
+export default {
+  methods: {
+    logout() {
+      this.$auth.logout()
+      this.$router.push('/login')
+    },
+  },
+  computed: {
+    routesManagerCurriculumVitae() {
+      var levelUser = this.$auth.user.level
+      return Routes_Manager_Curriculum_Vitae.filter((row) => {
+        return row.level == levelUser
+      })
+    },
+  },
+}
 </script>
 
 <style>

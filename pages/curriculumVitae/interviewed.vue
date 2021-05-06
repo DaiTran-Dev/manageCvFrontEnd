@@ -70,6 +70,7 @@ export default {
         return
       }
       this.curriculumVitaeId = null
+      this.loadDataTableCurriculumVitae()
     },
     setItemTable(curriculumVitaes) {
       if (!Array.isArray(curriculumVitaes)) {

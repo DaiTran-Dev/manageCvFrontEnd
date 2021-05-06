@@ -165,16 +165,18 @@ export default {
     },
   },
   methods: {
+    // Submit form and send event to component parent and result is editCurriculumVitae
     onSubmit(event) {
-      event.preventDefault()
-      console.log(this.editCurriculumVitae)
-      console.log('--------')
       this.$emit('onSubmit', this.editCurriculumVitae)
     },
+
+    //Rest form
     onReset(event) {
       event.preventDefault()
       this.editCurriculumVitae = this.curriculumVitae
     },
+
+    //Get Date Now y-m-d
     dateNow() {
       var dateNow = new Date()
       return (

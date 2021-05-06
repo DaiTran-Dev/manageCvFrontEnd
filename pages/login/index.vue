@@ -11,11 +11,7 @@
       <div class="col-md-7">
         <div class="card-body">
           <div class="brand-wrapper">
-            <img
-              src="https://www.bootstrapdash.com/demo/login-template-free-2/assets/images/logo.svg"
-              alt="logo"
-              class="logo"
-            />
+            <img src="~assets/devfast-logo.png" alt="logo" class="logo" />
           </div>
           <p class="login-card-description">Sign into your account</p>
           <form action="">
@@ -25,6 +21,7 @@
                 type="email"
                 name="email"
                 id="email"
+                v-model="userForm.email"
                 class="form-control"
                 placeholder="Email address"
               />
@@ -36,6 +33,7 @@
                 name="password"
                 id="password"
                 class="form-control"
+                v-model="userForm.password"
                 placeholder="***********"
               />
             </div>
@@ -45,6 +43,7 @@
               class="btn btn-block login-btn mb-4"
               type="button"
               value="Login"
+              @click.prevent="login"
             />
           </form>
           <a href="#!" class="forgot-password-link">Forgot password?</a>
@@ -64,8 +63,25 @@
 
 <script>
 export default {
-  layout: "loginLayout",
-};
+  layout: 'loginLayout',
+  data() {
+    return {
+      userForm: {
+        email: '',
+        password: '',
+      },
+    }
+  },
+  methods: {
+    async login() {
+      await this.$auth
+        .login({
+          data: this.userForm,
+        })
+        .then(() => this.$router.push('/'))
+    },
+  },
+}
 </script>
 
 <style scoped>

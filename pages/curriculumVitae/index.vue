@@ -66,8 +66,6 @@ export default {
       if (deleteStatus) {
         //Call Method loadDataTableCurriculumVitae
         this.loadDataTableCurriculumVitae()
-      } else {
-        console.log('Delete erro')
       }
     },
     editAction(curriculumVitaeId) {
@@ -84,7 +82,6 @@ export default {
     },
     handlingFeedbackForm(stausFeedback) {
       if (!stausFeedback) {
-        console.log('Erro -submit form')
         return
       }
       this.curriculumVitaeId = null

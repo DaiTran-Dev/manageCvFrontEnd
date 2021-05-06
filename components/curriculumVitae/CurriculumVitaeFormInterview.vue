@@ -3,16 +3,23 @@
     <b-form @submit="onSubmit" @reset="onReset">
       <b-row>
         <b-col sm="6">
-          <b-form-group label="Ngày Phỏng Vấn">
+          <b-form-group label="Ngày Phỏng Vấn" v-if="interviewStatus">
             <b-form-datepicker
               class="mb-2"
               v-model="editCurriculumVitae.interview_date"
               placeholder="YYYY-MM-DD"
             ></b-form-datepicker>
           </b-form-group>
+          <b-form-group label="Ngày Đi Làm" v-else>
+            <b-form-datepicker
+              class="mb-2"
+              v-model="editCurriculumVitae.date_to_work"
+              placeholder="YYYY-MM-DD"
+            ></b-form-datepicker>
+          </b-form-group>
         </b-col>
         <b-col sm="6">
-          <b-form-group label="Giờ Phỏng Vấn">
+          <b-form-group label="Giờ Phỏng Vấn" v-if="interviewStatus">
             <b-form-timepicker
               v-model="editCurriculumVitae.interview_time"
               locale="vn"
@@ -23,6 +30,7 @@
       <b-form-group label="Trạng Thái Curriculum Vitae">
         <b-form-select
           size="sm"
+          v-model="editCurriculumVitae.status"
           :value="editCurriculumVitae.status"
           :options="statusCurriculumVitae"
           value-field="id"
@@ -85,6 +93,7 @@ export default {
     return {
       editCurriculumVitae: {},
       newCreationState: false,
+      interviewStatus: true,
     }
   },
   computed: {
@@ -95,25 +104,36 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
+      //Set interview_date_time
       this.editCurriculumVitae.interview_date_time =
         this.editCurriculumVitae.interview_date +
         ' ' +
         this.editCurriculumVitae.interview_time
-      console.log('--------')
-      console.log(this.editCurriculumVitae)
-      console.log('--------')
+        console.log(this.editCurriculumVitae)
+      //Send event onSubmit to parent component and resultis editCurriculumVitae
       this.$emit('onSubmit', this.editCurriculumVitae)
     },
+
+    //Reset form
     onReset(event) {
       event.preventDefault()
       this.editCurriculumVitae = this.curriculumVitae
     },
   },
+  created() {
+    // Check the path url for the correct form input date
+    var path = this.$route.fullPath
+    if (path == '/curriculumVitae/unreviewed') {
+      this.interviewStatus = true
+    } else {
+      this.interviewStatus = false
+    }
+  },
   watch: {
     curriculumVitae: {
       immediate: true,
       handler() {
-        this.editCurriculumVitae =this.curriculumVitae
+        this.editCurriculumVitae = this.curriculumVitae
       },
     },
   },

@@ -73,6 +73,7 @@ export default {
   },
   methods: {
     searchAction() {
+      //Send event search-action to component parent and result is filteredFields
       this.$emit('search-action', convertOptionQueries(this.filteredFields))
     },
   },

@@ -38,11 +38,25 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next'
   ],
   bootstrapVue: {
     icons: true
   },
-
+  auth: {
+    redirect: {
+      callback: '/'
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'auth/login', method: 'post' },
+          user: { url: 'auth/user', method: 'get' },
+          logout: false
+        }
+      },
+    }
+  },
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: 'http://127.0.0.1:8000/api/',
@@ -57,5 +71,8 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+  router: {
+    middleware: ['auth', 'web-auth']
+  },
 }

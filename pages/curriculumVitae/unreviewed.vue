@@ -5,11 +5,12 @@
         <curriculum-vitae-search @search-action="searchAction($event)" />
       </b-col>
     </b-row>
-    
     <!-- List Cv  -->
     <curriculum-vitae-table
       v-if="itemTable.length > 0"
       :itemsTable="itemTable"
+      @click-edit="editAction($event)"
+      @delete-action="deleteAction($event)"
       @update-curriculumVitae="updateTableAction($event)"
     />
     <div v-else class="text-center"><h2>Hiện Tại Chưa có dữ liệu...</h2></div>
@@ -42,6 +43,20 @@ export default {
     }
   },
   methods: {
+    deleteAction(deleteStatus) {
+      if (deleteStatus) {
+        //Call Method loadDataTableCurriculumVitae
+        this.loadDataTableCurriculumVitae()
+      } else {
+        console.log('Delete erro')
+      }
+    },
+    editAction(curriculumVitaeId) {
+      console.log('Asdad')
+      console.log(curriculumVitaeId)
+      this.curriculumVitaeId = curriculumVitaeId
+      this.$bvModal.show('createEidtCvModal')
+    },
     updateTableAction(updateStatus) {
       if (!updateStatus) {
         return
@@ -55,10 +70,10 @@ export default {
         return
       }
       this.curriculumVitaeId = null
+      this.loadDataTableCurriculumVitae()
     },
     setItemTable(curriculumVitaes) {
       if (!Array.isArray(curriculumVitaes)) {
-        console.log('Ko La Mang')
         return
       }
       this.itemTable = curriculumVitaes
@@ -77,7 +92,6 @@ export default {
         .then((res) => {
           //Set value to ItemTable
           this.setItemTable(res)
-          console.log(res)
         })
         .catch((err) => {
           console.log('Erro loadDataTable CurriculumVitae ' + err)
@@ -90,19 +104,12 @@ export default {
         params: filteredFields,
       })
     },
-    searchAction(search_content_email) {
-      var filteredFields = {
-        status: {
-          condition: '=',
-          value: null,
-        },
+    searchAction(filteredFields) {
+      filteredFields.status = {
+        condition: '=',
+        value: null,
       }
-      if (search_content_email) {
-        filteredFields.email = {
-          condition: 'like',
-          value: `%${search_content_email}%`,
-        }
-      }
+      console.log(filteredFields)
       var curriculumVitaes = this.getCurriculumVitaeByFilteredFields(
         filteredFields
       )

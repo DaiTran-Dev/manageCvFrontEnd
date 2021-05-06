@@ -8,7 +8,7 @@ export const FIELDS_TABLE_CV = [
   { key: "job_id", label: 'Vị Trí', sortable: false },
   { key: "link_cv", label: 'Link CV', sortable: false },
   { key: "received_date", label: 'Ngày Nhận CV', sortable: false },
-  { key: "interview_date", label: 'Ngày PV', sortable: false },
+  { key: "interview_date_time", label: 'Ngày PV', sortable: false },
   { key: "status", label: 'Trạng Thái', sortable: false },
   { key: "date_to_work", label: 'Ngày Làm Việc', sortable: false },
   { key: "send_mail_status", label: 'Phản Hồi Email', sortable: false },
@@ -49,3 +49,16 @@ export const YEAR_OF_BIRTH = [
   { id: 3, name: "2000" },
   { id: 4, name: "2001" }
 ];
+
+//permission user
+export const PERMISSION_USER = [
+  { id: 0, pages: ['/', '/curriculumVitae/'] },
+  { id: 1, pages: ['/', '/curriculumVitae/unreviewed', '/curriculumVitae/interviewed'] }
+]
+
+//Route Link
+export const Routes_Manager_Curriculum_Vitae = [
+  { url: "/curriculumVitae/", class: "nav-link", icon: "camera", title: "All Cv", level: 0 },
+  { url: "/curriculumVitae/unreviewed", class: "nav-link", icon: "camera", title: "Unreviewed", level: 1 },
+  { url: "/curriculumVitae/interviewed", class: "nav-link", icon: "camera", title: "Interviewed", level: 1 }
+]

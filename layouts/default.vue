@@ -4,28 +4,29 @@
     <div class="main-content">
       <TheHeader></TheHeader>
       <div class="show-content">
-        <Nuxt/>
+        <Nuxt />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import TheSidebar from "~/components/TheSidebar";
-import TheHeader from "~/components/TheHeader";
+import TheSidebar from '~/components/TheSidebar'
+import TheHeader from '~/components/TheHeader'
 
 export default {
   components: {
     TheSidebar,
     TheHeader,
   },
-};
+  auth: true,
+}
 </script>
 
 <style>
 html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -41,11 +42,11 @@ html {
   box-sizing: border-box;
   margin: 0;
 }
-.main-content{
+.main-content {
   position: relative;
   margin-left: 250px;
 }
-.show-content{
+.show-content {
   padding-top: 3em;
 }
 </style>

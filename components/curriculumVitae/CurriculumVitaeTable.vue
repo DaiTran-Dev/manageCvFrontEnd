@@ -26,6 +26,7 @@
     <!-- Custom field  status cv -->
     <template #cell(status)="{ value, item }">
       <b-form-select
+        v-if="$auth.user.level == 1"
         size="sm"
         :value="value"
         :options="statusCv"
@@ -34,11 +35,15 @@
         text-field="name"
         class="width-max-content"
       ></b-form-select>
+      <p v-else-if="$auth.user.level == 0">
+        {{ findNameFromListMasterById(value, statusCv) }}
+      </p>
     </template>
 
     <!-- Custom field  email_status -->
     <template #cell(send_mail_status)="{ value, item }">
       <b-form-select
+        v-if="$auth.user.level == 0"
         size="sm"
         :value="value"
         :options="emailStatus"
@@ -47,16 +52,14 @@
         text-field="name"
         class="width-max-content"
       ></b-form-select>
+      <p v-else-if="$auth.user.level == 1">
+        {{ findNameFromListMasterById(value, emailStatus) }}
+      </p>
     </template>
 
     <!-- Custom field  email_status -->
     <template #cell(date_to_work)="date_to_work">
-      <b-form-datepicker
-        :value="date_to_work.value"
-        size="sm"
-        class="width-max-content"
-        disabled="disabled"
-      ></b-form-datepicker>
+      <p>{{ date_to_work.value }}</p>
     </template>
 
     <!-- Custom field  edit -->
@@ -70,7 +73,7 @@
     </template>
 
     <!-- Custom field  delete -->
-    <template #cell(delete)="row">
+    <template #cell(delete)="row" v-if="$auth.user.level == 0">
       <b-button
         variant="outline-danger"
         type="button"
@@ -101,6 +104,7 @@ export default {
   },
   props: ['itemsTable'],
   methods: {
+    //Config showBox
     showMsgBoxDelete() {
       return this.$bvModal.msgBoxConfirm(
         'Please confirm that you want to delete everything.',
@@ -117,6 +121,8 @@ export default {
         }
       )
     },
+
+    // Call API delete a CurriculumVitae by id
     async deleteCurriculumVitae(curriculumVitaeId) {
       return await this.$axios.$delete(`curriculumVitaes/${curriculumVitaeId}`)
     },
@@ -129,24 +135,32 @@ export default {
           //Call API Delete
           this.deleteCurriculumVitae(curriculumVitaeId)
             .then((res) => {
-              console.log('Xóa thành công nhé !!')
               //Send event to parent
               this.$emit('delete-action', true)
             })
             .catch((err) => {
-              console.log('Xóa thành công nhé !!')
               //Send event to parent
               this.$emit('delete-action', true)
             })
         }
       })
     },
+
+    // Call API updaute a CurriculumVitae by id
     async updateCurriculumVitae(curriculumVitae, curriculumVitaeId) {
       return await this.$axios.$put(
         `curriculumVitaes/updateByFied/${curriculumVitaeId}`,
         curriculumVitae
       )
     },
+
+    // Call API send email
+    async sendEmail(curriculumVitaeId, statusEmail) {
+      return await this.$axios.$get(
+        `sendEmail/${curriculumVitaeId}/${statusEmail}`
+      )
+    },
+
     async updateAction(field, valueField, curriculumVitaeId) {
       var curriculumVitae = {}
       curriculumVitae[field] = valueField
@@ -155,6 +169,10 @@ export default {
         .then((res) => {
           //Send event update to parent
           this.$emit('update-curriculumVitae', true)
+          if (field == 'send_mail_status' && valueField != '') {
+            //Send Email
+            this.sendEmail(curriculumVitaeId, valueField)
+          }
         })
         .catch((err) => {
           this.$emit('update-curriculumVitae', false)
