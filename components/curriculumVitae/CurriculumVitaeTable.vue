@@ -153,26 +153,18 @@ export default {
         curriculumVitae
       )
     },
-
-    // Call API send email
-    async sendEmail(curriculumVitaeId, statusEmail) {
-      return await this.$axios.$get(
-        `sendEmail/${curriculumVitaeId}/${statusEmail}`
-      )
-    },
-
     async updateAction(field, valueField, curriculumVitaeId) {
       var curriculumVitae = {}
       curriculumVitae[field] = valueField
+      if (field == 'send_mail_status' && valueField != '') {
+        //update send Email
+        curriculumVitae['taskScheduler_status'] = true
+      }
       //Call API update
       this.updateCurriculumVitae(curriculumVitae, curriculumVitaeId)
         .then((res) => {
           //Send event update to parent
           this.$emit('update-curriculumVitae', true)
-          if (field == 'send_mail_status' && valueField != '') {
-            //Send Email
-            this.sendEmail(curriculumVitaeId, valueField)
-          }
         })
         .catch((err) => {
           this.$emit('update-curriculumVitae', false)

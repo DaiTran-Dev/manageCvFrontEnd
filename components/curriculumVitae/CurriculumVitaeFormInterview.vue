@@ -109,7 +109,7 @@ export default {
         this.editCurriculumVitae.interview_date +
         ' ' +
         this.editCurriculumVitae.interview_time
-        console.log(this.editCurriculumVitae)
+      console.log(this.editCurriculumVitae)
       //Send event onSubmit to parent component and resultis editCurriculumVitae
       this.$emit('onSubmit', this.editCurriculumVitae)
     },
