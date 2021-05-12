@@ -1,18 +1,20 @@
 <template>
   <div class="wrapper">
+  <h1>Demo icon<font-awesome-icon prefix="far" icon="spinner" />
+</h1>
     <div id="sidebar">
       <div class="container-fluid">
         <a href="" class="navbar-brand"> Dev<span>Fast</span> </a>
         <b-nav class="flex-column menu">
           <li class="nav-item">
             <NuxtLink to="/" class="nav-link active"
-              ><b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
+              ><b-icon icon="house-fill" font-scale="1" class="icon-menu"></b-icon
               ><span>Home</span></NuxtLink
             >
           </li>
           <li class="nav-item">
             <div class="nav-link" v-b-toggle.collapse-2>
-              <b-icon icon="camera" font-scale="1" class="icon-menu"></b-icon
+              <b-icon icon="menu-button-wide-fill" font-scale="1" class="icon-menu"></b-icon
               ><span>Manage CV</span>
             </div>
             <b-collapse id="collapse-2">
